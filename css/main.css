@@ -1,0 +1,68 @@
+body, html {
+    margin: 0;
+    height: 100%;
+    font-family: 'Montserrat';
+    font-size: 1rem;
+}
+
+#loginBody {
+    margin: 0;
+    display: grid;
+    grid-template-areas:
+        "login";
+    background-image: url("assets/loginBackground.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+}
+
+#loginDiv {
+    grid-area: login;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border: solid;
+    border-color: #F7F7F7;
+    border-radius: 10px;
+    justify-self: center;   
+    align-self: center;
+    background-color: #F7F7F7;
+    box-shadow: 3px 10px 10px 5px rgba(0,0,0,0.2);
+    width: 20rem;
+}
+
+#loginForm{
+    display: flex;
+    flex-direction: column;
+}
+
+#citasBody {
+    display: grid;
+    grid-template-columns: minmax(25rem, 5rem) 1fr;
+    grid-template-areas:
+        "sideMenu contenido";
+}
+
+#contenidoCitas{
+    grid-area: contenido;
+}
+
+#sideMenu{
+    grid-area: sideMenu;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "userInfo"
+        "listaOpciones";
+}
+
+#userInfo{
+    grid-area: userInfo;
+    width: auto;
+    height: 264px;
+    background: linear-gradient(180deg, #30CBFC 0%, #0028F8 100%);
+}
+
+#listaOpciones{
+    grid-area: listaOpciones;
+}
+
