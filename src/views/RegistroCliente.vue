@@ -56,34 +56,55 @@
         email: '',
         fechaNacimiento: '',
         nombre: '',
-        password: 'none',
-        telefono: '' 
+        password: this.generarContraseña(),
+        telefono: '' ,
+        tipo:'cliente'
       }
     },
     methods:{
       ...mapActions({
-        registrar: 'clientes/registrar'
+        registrar: 'clientes/registrar',
+        editar: 'clientes/editar'
       }),
+      generarContraseña(){
+        var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789*#$@&";
+        var contraseña = "";
+        for (let i=0; i<7; i++) contraseña += caracteres.charAt(Math.floor(Math.random()*caracteres.length));
+        return contraseña;
+      },
       registrarCliente(){ 
-        let json = {
-          ocupacion: this.ocupacion,
-          persona: {
-            apellido: this.apellido,
-            cedula: this.cedula,
-            direccion: this.direccion,
-            email: this.email,
-            fechaNacimiento: this.fechaNacimiento,
-            nombre: this.nombre,
-            password: this.password,
-            telefono: this.telefono 
+        let edit = {
+          cedula: this.cedula,
+          clienteDdata:{
+            ocupacion: this.ocupacion,
+            persona: {
+              apellido: this.apellido,
+              cedula: this.cedula,
+              direccion: this.direccion,
+              email: this.email,
+              fechaNacimiento: this.fechaNacimiento,
+              nombre: this.nombre,
+              password: this.password,
+              telefono: this.telefono 
+            }
           }
+          
         }
-        this.registrar(json).then((response)=>{
+        let create = {
+            cedula: this.cedula,
+            password: this.password,
+            tipo: this.tipo 
+          
+        }
+        this.registrar(create).then((response)=>{
           console.log(response.data.message)
           if(response.data.message == 'success'){
-            this.$router.push({ name:'Clientes' })
-          }else if(response.data.message == 'failed'){
-            this.error = 'error'
+            this.registrar(edit).then((response)=>{
+              console.log(response.data.message)
+                if(response.data.message == 'success'){
+                  this.$router.push({ name:'Clientes' })
+                }
+              })
           }
         })
       }

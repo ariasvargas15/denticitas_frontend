@@ -26,7 +26,17 @@ export default {
         let response 
         try {
           console.log(credentials)
-          response = await this._vm.$http.post('cliente', credentials)
+          response = await this._vm.$http.post('registro', credentials)
+        } catch (error) {
+          console.error(error);
+        }
+        return response
+      },
+      async editar(_,credentials) {
+        let response 
+        try {
+          console.log(credentials)
+          response = await this._vm.$http.put('cliente', credentials)
         } catch (error) {
           console.error(error);
         }

@@ -1,5 +1,5 @@
 <template>
-    <form class='formLayout card contenido' style="margin:0" id='registroEspecialistaForm' @submit.prevent='login()'>
+    <form class='formLayout card contenido' style="margin:0" id='registroEspecialistaForm' @submit.prevent='regisrarCita()'>
         <h2 style='font-weight: bolder;'>Registrar Cita</h2>
 
         <div class="inputsTextarea">
@@ -30,8 +30,7 @@
   export default {
     name: 'RegistroCliente',
     methods:{
-      login(){ 
-          this.$router.push({ name: 'Citas' })
+      regisrarCita(){
       }
     }
   }
