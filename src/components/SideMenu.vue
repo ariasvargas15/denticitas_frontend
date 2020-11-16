@@ -2,7 +2,7 @@
   <div  class="sideBar">
     <div class="sideBarHeader">
       <a href="#"><div class="userImg"></div></a>
-      <a href="#"><h3>Nombre Apellido</h3></a>
+      <a href="#"><h3>{{user}}</h3></a>
     </div>
     <div class="sideBarNav">
       <div class="sideBarNavItems">
@@ -17,9 +17,14 @@
 </template>
 
 <script>
-
+  import {mapGetters} from 'vuex'
   export default {
     name: 'SideMenu',
+    computed:{
+       ...mapGetters({
+        user: "authentication/getLogedUser"
+      })
+    },
     methods:{
       logout(){ 
         this.$router.push({ name: 'Login' })

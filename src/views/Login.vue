@@ -1,10 +1,10 @@
 <template>
     <div id='loginView'>
-        <form class='formLayout card' id='loginForm' @submit.prevent='login()'>
+        <form class='formLayout card' id='loginForm' @submit.prevent='submit()'>
             <h2 style='font-weight: bolder;'>Iniciar sesión</h2>
             <i class="fas fa-tooth" style='font-size: xxx-large;'></i>
             <h2 style='font-weight: bolder;'>Denticitas</h2>
-            <div class="" v-if="error">          
+            <div class="" v-show="error">          
               {{ error }}
             </div>
             <div class='lableInputGroup'>
@@ -22,33 +22,35 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  import {mapActions} from 'vuex'
   export default {
     name: 'Login',
     data(){
       return{
-        user: '105032',
-        password: 'denti123*#',
+        user: '',
+        password: '',
         tipo: 'admin',
         error: ''
       }
     },
     methods:{
-      async login(){ 
-        /*consumir servicio login*/
+      ...mapActions({
+        login: 'authentication/login'
+      }),
+      submit(){ 
         let json = {
           cedula: this.user,
           password: this.password,
           tipo: this.tipo
         }
-        // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-        axios.post('http://3.82.145.61:8080/login', json).then(data=>{console.log(data)})
-        // axios.post('http://3.82.145.61:8080/login?cedula=105032&password=denti123*%23&tipo=admin').then(data=>{console.log(data)})
-        // if(this.user==='romariojaimes@gmail.com' && this.password==='123456'){
-        //   this.$router.push({ name: 'Citas' })
-        // }else{
-        //   this.error = 'No existe el usuario'
-        // }
+        this.login(json).then((response)=>{
+          console.log(response.data.message)
+          if(response.data.message == 'success'){
+            this.$router.push({ name:'Citas' })
+          }else if(response.data.message == 'failed'){
+            this.error = 'Usario o Contraseña incorrecta'
+          }
+        })
       }
     }
   }

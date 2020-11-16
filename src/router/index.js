@@ -29,7 +29,6 @@ const routes = [
   {
     path: '/citas',
     name: 'Citas',
-    
     components:{
       default: () => import(/* webpackChunkName: "citas" */ '../views/Citas.vue'),
       sideMenu: SideMenu

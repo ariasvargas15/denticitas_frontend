@@ -1,5 +1,5 @@
 <template>
-    <form class='formLayout card' id='registroEspecialistaForm' @submit.prevent='login()'>
+    <form class='formLayout card contenido' style="margin:0" id='registroEspecialistaForm' @submit.prevent='login()'>
         <h2 style='font-weight: bolder;'>Registrar Cita</h2>
 
         <div class="inputsTextarea">

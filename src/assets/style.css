@@ -8,7 +8,8 @@ body{
 .leftSideBarLayout {
     height: 100%;
     display: grid;
-    grid-template-columns: minmax(20rem, 5rem) 1fr;
+    grid-template-columns: minmax(20rem, 10rem) 1fr;
+    grid-template-rows: 100vh auto;
     grid-template-areas:
         "sideMenu contenido";
 }
@@ -19,6 +20,9 @@ body{
     flex-flow: column;
     background: #FFFFFF;
     box-shadow: 8px 0px 19px 1px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    height: inherit;
+    width: 20rem;
 }
 
 .sideBarHeader{
@@ -56,7 +60,7 @@ body{
 
 .sideBarNav{
     display: flex;
-    flex: 1 1 auto;
+    /* flex: 1 1 auto; */
     flex-direction: column;
     justify-content: space-between;
 }
@@ -93,6 +97,7 @@ body{
 }
 
 .contenido{
+    grid-area: contenido;
     margin-left: 5rem;
 }
 
@@ -139,6 +144,26 @@ body{
     border-radius: 50px;
     padding: 0.8rem;
     width: 15rem;
+}
+
+.lableSelectGroup{
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+    /* height: 5rem; */
+    justify-content: space-around;
+    min-height: 5rem;
+    max-height: 9rem;
+}
+
+.lableSelectGroup select{
+    /* font-family: 'Roboto'; */
+    border: solid;
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0.13);
+    border-radius: 50px;
+    padding: 0.8rem;
+    /* width: 15rem; */
 }
 
 .lableTextareadGroup{

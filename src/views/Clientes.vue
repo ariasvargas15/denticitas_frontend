@@ -10,9 +10,9 @@
           <div class="personInfo">
             <div><img class="personImg" src="https://londonsquare.co.uk/images/uploads/bio/team_bio_AdamLawence.jpg"></div>
             <div>
-              <p class="itemTitle">{{cliente.nombre}}</p>
+              <p class="itemTitle">{{cliente.persona.nombre}} {{cliente.persona.apellido}}</p>
               <p>C.C. {{cliente.cedula}}</p>
-              <p>Tel. {{cliente.telefono}}</p>
+              <p>Tel. {{cliente.persona.telefono}}</p>
             </div>
           </div>
         </div>
@@ -22,27 +22,30 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   name: 'Clientes',
+  computed:{
+       ...mapGetters({
+        clientes: "clientes/getClientes"
+      }),
+      ...mapActions({
+        fetchClientes: 'clientes/fetchClientes'
+      })
+    },
   data() {
     return {
-      clientes: {
-        1: {
-          nombre:'Alexander  Salazar',
-          cedula:'1473849847',
-          telefono:'3114758384'},
-        2: {
-          nombre:'Name SecondName Lastname',
-          cedula:'1940938472',
-          telefono:'3048573847'}
-      }
     }
   },
   methods:{
     abrirRegistroCliente(){ 
       this.$router.push({ name:'RegistroCliente' })
     }
-  }
+  },
+  created(){
+      this.fetchClientes
+    }
 }
 </script>
 
