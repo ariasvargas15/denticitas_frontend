@@ -11,16 +11,15 @@ export default {
         }
     },
     actions: {
+
       async fetchCitas(state) {
-        let response 
+        let citas
         try {
-            // console.log(credentials)
-            response = await this._vm.$http.get('cita')
-            console.log(response.data)
+            citas = await this._vm.$http.get('cita')
         } catch (error) {
-            console.error(error);
+            console.error("ERROR", error)
         }
-        state.commit("fetchCitas", response.data)
+        state.commit("fetchCitas", citas.data)
       }
     },
     modules: {

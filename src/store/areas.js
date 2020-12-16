@@ -3,6 +3,7 @@ export default {
     state: {
       user:'',
       areas:[]
+      
 
     },
     mutations: {
@@ -11,17 +12,19 @@ export default {
         }
     },
     actions: {
+
       async fetchAreas(state) {
         let response 
         try {
-            // console.log(credentials)
             response = await this._vm.$http.get('area')
             console.log(response.data)
         } catch (error) {
             console.error(error);
         }
         state.commit("fetchAreas", response.data)
+        
       }
+      
     },
     modules: {
     },

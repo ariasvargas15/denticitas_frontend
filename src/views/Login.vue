@@ -1,23 +1,16 @@
 <template>
-    <div id='loginView'>
-        <form class='formLayout card' id='loginForm' @submit.prevent='submit()'>
-            <h2 style='font-weight: bolder;'>Iniciar sesión</h2>
-            <i class="fas fa-tooth" style='font-size: xxx-large;'></i>
-            <h2 style='font-weight: bolder;'>Denticitas</h2>
-            <div class="" v-show="error">          
-              {{ error }}
-            </div>
-            <div class='lableInputGroup'>
-                <label>Ususario</label>
-                <input v-model="user" type='text' name='user' id='nombre' required/>
-            </div>
-            <div class='lableInputGroup'>
-                <label>Contraseña</label>
-                <input v-model="password" type='password' name='password' id='Contraseña' required/>
-            </div>
-            <button id='buttonLogin' class='buttonStyle1'>Iniciar Sesión</button>
-            <!-- <p>No estas registrado? <a href='vistaRegistroNuevoUsuario.jsp'>Crear cuenta</a></p> -->
-        </form>
+    <div class='login'>
+        <v-form class="card form form--login" @submit.prevent='submit()'>
+          <div class="form__title">
+            <h2>Iniciar sesión</h2>
+            <em class="fas fa-tooth" style='font-size: xxx-large;'></em>
+            <h2>Denticitas</h2>
+          </div>
+          <v-alert v-model="error" type="error" dense dismissible>{{errorMessage}}</v-alert>
+          <v-text-field v-model="user" label="User" type="text" :rules="fieldRules" outlined  required></v-text-field>
+          <v-text-field v-model="password" label="Contraseña" type="password" :rules="fieldRules" outlined  required></v-text-field>
+          <button class='button button--primary button--block button--fat'>Iniciar Sesión</button>
+        </v-form>
     </div>
 </template>
 
@@ -25,32 +18,52 @@
   import {mapActions} from 'vuex'
   export default {
     name: 'Login',
+
+    computed:{
+      
+    },
+
     data(){
       return{
         user: '',
         password: '',
-        tipo: 'admin',
-        error: ''
+        rol: 'admin',
+        error: false,
+        errorMessage:'',
+        fieldRules: [v => !!v || 'Campo requerido']
       }
     },
     methods:{
+
       ...mapActions({
         login: 'authentication/login'
       }),
+
       submit(){ 
-        let json = {
+        let credential = {
           cedula: this.user,
           password: this.password,
-          tipo: this.tipo
+          rol: this.rol
         }
-        this.login(json).then((response)=>{
-          console.log(response.data.message)
-          if(response.data.message == 'success'){
-            this.$router.push({ name:'Citas' })
-          }else if(response.data.message == 'failed'){
-            this.error = 'Usario o Contraseña incorrecta'
-          }
-        })
+        if(this.user=='' || this.password==''){
+          this.error = true
+          this.errorMessage = 'Debe llenar los campos'
+        }else{
+          this.login(credential).then((response)=>{
+            console.log(response.data.message)
+            if(response.data.message == 'success'){
+              sessionStorage.user = this.user
+              sessionStorage.logged = true
+              this.$router.push({ name:'Citas' })
+            }else if(response.data.message == 'failed'){
+              this.error = true
+              this.errorMessage = 'Usuario o contraseña inconrrecta'
+            }else{
+              this.error = true
+              this.errorMessage = response
+            }
+          })
+        }
       }
     }
   }

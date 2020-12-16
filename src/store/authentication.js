@@ -14,10 +14,9 @@ export default {
     async login(state,credentials) {
       let response 
       try {
-        console.log(credentials)
         response = await this._vm.$http.post('login', credentials)
       } catch (error) {
-        console.error(error);
+        response = error;
       }
       state.commit("setLogedUser", credentials.cedula)
       return response

@@ -2,19 +2,23 @@ export default {
     namespaced: true,
     state: {
       user:'',
-      servicios:[]
+      servicios:[],
+      passingData:null
 
     },
     mutations: {
-        fetchServicios(state, response) {
-            state.servicios = response
-        }
+      fetchServicios(state, response) {
+          state.servicios = response
+      },
+
+      setPassingData(state, passingData) {
+        state.passingData = passingData
+      }
     },
     actions: {
       async fetchServicios(state) {
         let response 
         try {
-            // console.log(credentials)
             response = await this._vm.$http.get('servicio')
             console.log(response.data)
         } catch (error) {
@@ -22,30 +26,15 @@ export default {
         }
         state.commit("fetchServicios", response.data)
       },
-      async registrar(_,credentials) {
-        let response 
-        try {
-          console.log(credentials)
-          response = await this._vm.$http.post('servicio', credentials)
-        } catch (error) {
-          console.error(error);
-        }
-        return response
+
+      setPassingData(state, passingData) {
+        state.commit("setPassingData", passingData)
       },
-      async eliminar(_,credentials) {
-        let response 
-        try {
-          console.log(credentials)
-          response = await this._vm.$http.delete('servicio', credentials)
-        } catch (error) {
-          console.error(error);
-        }
-        return response
-      }
     },
     modules: {
     },
     getters: {
-        getServicios: state => state.servicios
+        getServicios: state => state.servicios,
+        getPassingData: state => state.passingData
       }
   }

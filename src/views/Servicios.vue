@@ -1,20 +1,23 @@
 <template>
-    <div class="contenido">
-      <h2 class="viewTitle">Servicios</h2>
+    <div class="contenido contenido--marginLeft">
+      <h2 class="text--weightBold text--margin1">Servicios</h2>
       <!-- <input class="searchInput" type="text" placeholder="Busqueda" name="busquedaServicio" />
       <button class="buttonStyle1">Buscar</button> -->
-      <button class="buttonStyle1" v-on:click="abrirRegistroServicio()">Registrar servicio</button>
-      <ul class="componentList">
-        <li  v-for="servicio in servicios" :key="servicio.id">
-          <div class="card servicioItem">
-            <button class="buttonStyle1">Editar</button>
-            <button class="buttonStyle1" v-on:click="eliminarServicio(servicio.id)">Eliminar</button>
-            <p class="itemTitle">{{servicio.nombre}}</p>
+      <button class="button button--primary" v-on:click="abrirRegistroServicio()">Registrar servicio</button>
+      <div v-if="servicios.length>0">
+        <div class="itemsList">
+          <div  v-for="servicio in servicios" v-show="servicio.estado==true" :key="servicio.id" class="card servicioItem">
+            <div class="buttonsGroup buttonsGroup--left">
+              <button class="button button--outlined button--tiny" v-on:click="abrirEditarServicio(servicio)">Editar </button>
+              <button class="button button--outlined button--tiny" v-on:click="deshabilitarServicio(servicio)">Desahabilitar</button>
+            </div>
+            <p class="text--weightBold">{{servicio.nombre}}</p>
+            <p><span class="text--weightBold">Area:</span> {{servicio.areaId.nombre}}</p>
             <p>{{servicio.descripcion}}</p>
-            <p class="servicioPrice">$ {{servicio.precio}}</p>
+            <p class="text--primaryColor">$ {{servicio.precio}}</p>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -37,25 +40,43 @@
     },
     methods:{
       ...mapActions({
-        eliminar: 'servicios/eliminar'
+        setPassingData: 'servicios/setPassingData',
+        fetchServicios: 'servicios/fetchServicios'
       }),
+      ...mapGetters({
+        servicios: "servicios/getServicios"
+      }),
+      
       abrirRegistroServicio(){ 
-        console.log('cncnoisdncosndc -kxmlkasmd')
         this.$router.push({ name:'RegistroServicio' })
       },
-      eliminarServicio(servicio){
-        console.log(servicio)
-        let json = {
-          id: Number(servicio)
+
+      abrirEditarServicio(servicio){ 
+        this.setPassingData(servicio)
+        this.$router.push({ name:'EditarServicio' })
+      },
+
+      async deshabilitarServicio(servicio){
+
+        let datos = {
+          estado: false
         }
-        this.eliminar(json).then((response)=>{
-          console.log(response.data.message)
-          if(response.data.message == 'success'){
-            console.log('lllllllllllllllllssssssssssssssssssssssssssss')
-          }
-        })
+
+        try {
+          await this.$http.patch('servicio/'+servicio.id, datos).then((response)=>{
+            if(response.data.message == 'success'){
+              let pos = this.servicios.indexOf(servicio)
+              this.servicios.splice(pos, 1)
+            }else{
+              //mostrar mensaje de error
+            }
+          })
+        } catch (error) {
+          console.error(error);
+        }
       }
     },
+
     created(){
       this.fetchServicios
     }

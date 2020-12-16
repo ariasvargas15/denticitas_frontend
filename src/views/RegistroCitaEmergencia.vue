@@ -1,11 +1,10 @@
 <template>
   <div class="contenido contenido--registroLayout">
     <v-form class='card form form--cita' @submit.prevent='regisrarCita()'>
-      <h2 class="form__title form__title--cita">Registrar Cita</h2>
+      <h2 class="form__title form__title--cita">Registrar Cita de Emergencia</h2>
       <v-alert class="form__alert form__alert--cita" v-model="error" type="error" dense dismissible>{{errorMessage}}</v-alert>
       <div class="form__fields form__fields--cita">
         <v-text-field label="Documento del cliente" type="text" :rules="fieldRules" v-model="user" outlined  required></v-text-field>
-        <v-combobox label="Servicio" :rules="fieldRules" @change="setEspecialistasServicio(servicio.areaId.id)" item-text="nombre" :items="getServiciosActivos()"  v-model="servicio" outlined  required></v-combobox>
         <v-combobox label="Especialista" :rules="fieldRules"  @change="setAgendaEspecialista(especialista.persona.cedula)"  :item-text="getNombreEspecialista" :items="getEspecialistas()" v-model="especialista" outlined  required></v-combobox>
         <v-combobox label="Turno" :rules="fieldRules" :item-text="formatedTurno" :items="getTurnos()"  v-model="turno" outlined required></v-combobox>
       </div> 
@@ -19,7 +18,7 @@
   import {mapActions} from 'vuex'
   import {mapGetters} from 'vuex'
   export default {
-    name: 'RegistroCita',
+    name: 'RegistroCitaEmergencia',
 
     computed:{
       ...mapGetters({
@@ -54,7 +53,7 @@
       async regisrarCita(){
         let datos={
           clienteCedula: this.user,
-          servicioId: this.servicio.id,
+          servicioId: 26,
           turnoId: this.turno.id
         }
         try {
@@ -79,7 +78,7 @@
         let servicios = []
 
         this.servicios.forEach(element => {
-          if(element.estado==true && element.id!=26){
+          if(element.estado==true){
             servicios.push(element)
           }
         });
@@ -87,9 +86,9 @@
         return servicios
       },
 
-      async setEspecialistasServicio(area){
+      async setEspecialistasServicio(){
         try {
-          await this.$http.get('area/'+area+'/especialista').then((response)=>{
+          await this.$http.get('/especialista').then((response)=>{
             if(response.data.message=='failed'){
               this.error=true
               this.errorMessage = response.data.error;
@@ -199,6 +198,7 @@
 
     created(){
       this.fetchServicios
+      this.setEspecialistasServicio()
     }
   }
 </script>

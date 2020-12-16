@@ -1,0 +1,474 @@
+$color-primary:#0367FE;
+$color-grey:#CCCCCC;
+$color-darker-grey:#D8D8D8;
+
+.leftSideBarLayout {
+    height: 100%;
+    display: grid;
+    grid-template-columns: minmax(20rem, 10rem) 1fr;
+    grid-template-rows: 100vh auto;
+    grid-template-areas:
+        "sideMenu contenido";
+}
+
+.contenido{
+    grid-area: contenido;
+
+    &--registroLayout{
+        display: grid;
+        place-items: center;
+    }
+
+    &--perfilLayout{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &--marginLeft{
+        margin-left: 5rem;
+    }
+}
+
+.login{
+    height: inherit;
+    display: grid;
+    grid-column: 1 / span 2;
+    place-items: center;
+    background-image:  url('../svg/login__background.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.card{
+    box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.text{
+
+    &--primaryColor{
+        color: $color-primary;
+    }
+
+    &--white{
+        color: white;
+    }
+
+    &--black{
+        color: black;
+    }
+
+    &--weightBold{
+        font-weight: bold;
+    }
+
+    &--margin1{
+        margin: 1rem;
+    }
+}
+
+.link{
+    
+    &--noDecoration{
+        text-decoration: none;
+    }
+}
+
+.button{
+    height: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 50px;
+    margin: 1rem;
+
+    &--primary{
+        color: white;
+        border: solid;
+        border-color: $color-primary;
+        background-color: $color-primary;
+
+        &:hover{
+            color: black;
+            border-color: $color-grey;
+            background-color: $color-grey;
+            transition: 0.3s;
+        }
+    }
+
+    &--outlined{
+        color: $color-primary;
+        border: solid 1.5px;
+        border-color: $color-primary;
+        background-color: white;
+        margin: 0.5rem;
+
+        &:hover{
+            color: white;
+            border-color: $color-primary;
+            background-color: $color-primary;
+            transition: 0.3s;
+        }
+    }
+
+    &--secondary{
+        color: black;
+        border: solid;
+        border-color: $color-darker-grey;
+        background-color: $color-darker-grey;
+
+        &:hover{
+            color: white;
+            border-color: $color-primary;
+            background-color: $color-primary;
+            transition: 0.3s;
+        }
+    }
+
+    &--block{
+        width: -moz-available;
+        width: -webkit-fill-available;
+    }
+
+    &--fat{
+        height: 2.5rem;
+    }
+
+    &--tiny{
+        font-size: 12px;
+        height: 1.5rem;
+    }
+}
+
+.buttonsGroup{
+    margin: 0.3rem;
+
+    &--left{
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.form{
+    text-align: center;
+    background-color: #ffffff;
+    padding: 3rem;
+
+    &--login{
+        width: 27rem;
+    }
+
+    &--cita{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rem;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "title title"
+            "alert alert"
+            "field date"
+            "button button";
+        align-items: center;
+        justify-items: center;
+    }
+
+    &--servicio{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rem;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "title title"
+            "alert alert"
+            "field textarea"
+            "button button";
+        justify-items: center;
+    }
+
+    &--cliente{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rem;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "title title title"
+            "alert alert alert"
+            "field1 field2 date"
+            "button button button";
+        justify-items: center;
+        align-items: center;
+    }
+
+    &--especialista{
+        margin-top: 2rem;;
+        margin-left: 5rem;
+        margin-right: 5rem;
+    }
+
+    &__title{
+        text-align: center;
+        margin-bottom: 2rem;
+
+        &--cita, &--servicio, &--cliente{
+            grid-area: title;
+        }
+    }
+
+    &__alert{
+        &--servicio, &--cita, &--cliente{
+            grid-area: alert;
+        }
+    }
+
+    &__fields{
+        &--cita, &--servicio{
+            grid-area: field;
+        }
+    }
+
+    &__fields1{
+        &--cliente{
+            grid-area: field1;
+        }
+    }
+
+    &__fields2{
+        &--cliente{
+            grid-area: field2;
+        }
+    }
+
+    &__date{
+        &--cita, &--cliente{
+            grid-area: date;
+        }
+    }
+
+    &__textarea{
+        &--servicio{
+            grid-area: textarea;
+        }
+    }
+
+    &__button{
+        &--cita, &--servicio, &--cliente{
+            grid-area: button;
+        }
+    }
+}
+
+.sideMenu{
+    grid-area: sideMenu;
+    display: flex;
+    flex-flow: column;
+    background: #FFFFFF;
+    box-shadow: 8px 0px 19px 1px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    height: inherit;
+    width: 20rem;
+
+    &__header{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 0 1 14rem;
+        background-color: #0367FE;
+        color: white;        
+    }
+
+    &__nav{
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+.navItems{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin:0;
+
+    &__item{
+        padding: 0.5rem;
+        margin: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 50px;
+
+        &:hover{
+            background-color: #e9e9e9;
+            transition: 0.3s;
+        }
+    }
+}
+
+.router-link-exact-active{
+    background-color: #A6B4FD;
+    transition: 0.3s;
+
+    &:hover{
+        background-color: #A6B4FD;
+    }
+}
+
+.roundImg{
+    background-color: $color-darker-grey;
+    border-radius: 50%;
+
+    &--big{
+        height: 7rem;
+        width: 7rem;
+    }
+
+    &--small{
+        height: 5.5rem;
+        width: 5.5rem;
+    }
+}
+
+.itemsList{
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+.citaItem{
+    border-radius: 16px;
+    color: white;
+    background-color: #0367FE;
+    padding: 1rem;
+    margin: 1rem;
+
+    &:hover{
+        background-color: #3082FE;
+        box-shadow: 7px 9px 8px rgba(0, 0, 0, 0.25);
+        transition: 0.3s;
+        cursor: pointer;
+    }
+}
+
+.servicioItem{
+    padding: 1rem;
+    margin: 1rem;
+    min-width: min-content;
+    width: 45rem;
+}
+
+.personItem{
+    padding: 1rem;
+    min-width: min-content;
+    width: 40rem;
+    width: 30rem;
+    margin: 1rem;
+
+    &__info{
+        display: flex;
+        align-items: center;
+        
+        img, div{
+            margin-left: 1rem;
+        }
+    }
+}
+
+.personData{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0.5rem;
+    row-gap: 1rem;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "title title"
+        "img img"
+        "subtitle data";
+    padding: 3rem;
+    margin: 1rem;
+    align-items: center;
+    justify-items: center;
+
+    &__title{
+        grid-area: title;
+    }
+
+    &__img{
+        grid-area: img;
+    }
+
+    &__subtitles{
+        grid-area: subtitle;
+    }
+
+    &__data{
+        grid-area: data;
+    }
+}
+
+.personData{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0.5rem;
+    row-gap: 1rem;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "title title"
+        "img img"
+        "subtitle data"
+        "areas areas"
+        "button button";
+    padding: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    align-items: center;
+    justify-items: center;
+    width: 30rem;
+
+    &__title{
+        grid-area: title;
+    }
+
+    &__img{
+        grid-area: img;
+    }
+
+    &__subtitles{
+        grid-area: subtitle;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    &__data{
+        grid-area: data;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__area{
+        grid-column:1/3;
+        grid-area: areas;
+    }
+
+    &__button{
+        grid-area: button;
+    }
+}
+
+.historiaClinica{
+    margin-top: 1rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    margin-bottom: 5rem;
+    padding: 2rem;
+}
+
+
+
+
+
+

@@ -1,23 +1,27 @@
 <template>
-  <div class="contenido">
-    <h2 class="viewTitle">Clientes</h2>
-    <button class="buttonStyle1" v-on:click="abrirRegistroCliente()">Registrar cliente</button>
-    <ul class="componentList especialistaList">
-      <li  v-for="cliente in clientes" :key="cliente">
-        <div class="card clienteItem">
-          <button class="buttonStyle1">Editar</button>
-          <button class="buttonStyle1">Eliminar</button>
-          <div class="personInfo">
-            <div><img class="personImg" src="https://londonsquare.co.uk/images/uploads/bio/team_bio_AdamLawence.jpg"></div>
+  <div class="contenido contenido--marginLeft">
+    <h2 class="text--weightBold text--margin1">Clientes</h2>
+    <button class="button button--primary" v-on:click="abrirRegistroCliente()">Registrar cliente</button>
+    <div v-if="clientes.length>0">
+      <div class="itemsList">
+        <div v-for="cliente in clientes" :key="cliente" class="card personItem">
+          <div class="buttonsGroup buttonsGroup--left">
+            <button class="button button--tiny button--outlined" v-on:click="abrirEditarCliente(cliente)">Editar</button>
+            <button class="button button--tiny button--outlined" v-on:click="abrirPerfilCliente(cliente)">Detalles</button>
+          </div>
+          <div class="personItem__info">
+            <img class="roundImg roundImg--small" alt="perfil photo" src="https://londonsquare.co.uk/images/uploads/bio/team_bio_AdamLawence.jpg">
             <div>
-              <p class="itemTitle">{{cliente.persona.nombre}} {{cliente.persona.apellido}}</p>
-              <p>C.C. {{cliente.cedula}}</p>
-              <p>Tel. {{cliente.persona.telefono}}</p>
+              <p>
+                <span class="text--weightBold">{{cliente.persona.nombre}} {{cliente.persona.apellido}}</span><br>
+                C.C. {{cliente.cedula}}<br>
+                Tel. {{cliente.persona.telefono}}
+              </p>
             </div>
           </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,6 +43,21 @@ export default {
     }
   },
   methods:{
+
+    ...mapActions({
+        setPassingData: 'clientes/setPassingData'
+    }),
+
+    abrirPerfilCliente(cliente){
+      this.setPassingData(cliente)
+      this.$router.push({ name:'DetalleCliente' })
+    },
+
+    abrirEditarCliente(cliente){
+      this.setPassingData(cliente)
+      this.$router.push({ name:'EditarCliente' })
+    },
+
     abrirRegistroCliente(){ 
       this.$router.push({ name:'RegistroCliente' })
     }
